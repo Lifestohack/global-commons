@@ -1,2 +1,10 @@
 # Global-Commons
-Simple Framework for everyday Java Projects
+Simple Maven Framework for everyday Maven or Java Projects
+
+-> Read Files
+-> CSV To Excel Converter
+-> Create a new Excel File
+
+
+#To Dos
+-> Excel to CSV Converter
