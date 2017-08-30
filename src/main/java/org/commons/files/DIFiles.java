@@ -1,5 +1,6 @@
 package org.commons.files;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -54,10 +55,21 @@ public class DIFiles {
 		return content;
 	}
 	
+	public static boolean isValidFile(String path){
+		File file = new File(path);
+	    if (file.exists() && file.isFile())
+	    {
+	    	return true;
+	    }else{
+	    	return false;
+	    }
+	}
+	
 	private static String readFile(String path, Charset encoding) 
 			  throws IOException 
 			{
 			  byte[] encoded = Files.readAllBytes(Paths.get(path));
 			  return new String(encoded, encoding);
 			}
+	
 }

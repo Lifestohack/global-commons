@@ -15,7 +15,7 @@ public class Test {
 
 	public static void main(String[] args) {	
 		
-		String s = DIProperties.getInstance().getProperty("d");
+		String s = DIProperties.getInstance().getProperty("diwas");
 		System.out.println(s);
 //		FileToTest();
 	}
