@@ -1,19 +1,32 @@
 package org.commons.excel;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.commons.logger.DILogger;
 
 public class DIExcelManager {
 
 	private Workbook wb = null;
 	private Sheet sheet = null;
+	
+	
+	
+	 private static final Logger logger =
+		        Logger.getLogger(DILogger.class.getName());
 	
 	
 	private FileOutputStream out = null;
@@ -73,6 +86,70 @@ public class DIExcelManager {
 			e.printStackTrace();
 		}
 	}
+	
+	public Workbook readExcel(String path){
+		
+	    InputStream inp = null;
+	    Workbook wb = null;
+		try {
+			inp = new FileInputStream(path);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	    try {
+			wb = WorkbookFactory.create(inp);
+		} catch (InvalidFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	    return wb;
+	}
+	
+	
+	
+	public List<String> getAllCellList(Workbook wb, int sheetIndex, int RowIndex){
+			Sheet sheet = wb.getSheetAt(sheetIndex);
+		    Row row = sheet.getRow(RowIndex);
+		    List<String> cellValues = new ArrayList<String>();
+		    for(Cell cell: row){
+		    	cellValues.add(cell.toString());
+		    }
+		    return cellValues;
+	}
+	
+
+	
+	
+	public List<String> getAllCellList(Workbook wb, String sheetName, int RowIndex) {
+		Sheet sheet = wb.getSheet(sheetName);
+		if(sheet == null){
+			try {
+				throw new Exception("Sheet " + sheetName + " doesnot exists.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	    Row row = sheet.getRow(RowIndex); 
+	    List<String> cellValues = new ArrayList<String>();
+	    for(Cell cell: row){
+	    	cellValues.add(cell.toString());
+	    }
+	    
+	    
+	    return cellValues;
+}
+
+	
+	public List<String> getColumn(){
+		return null;
+	}
+	
 	
 	public void close(){
 		
