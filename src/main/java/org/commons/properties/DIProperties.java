@@ -14,7 +14,7 @@ import org.commons.files.DIFiles;
 import org.commons.logger.DILogger;
 
 public class DIProperties {
-	private InputStream input = null;
+	
 	private static final Logger logger = Logger.getLogger(DILogger.class.getName());
 	private static DIProperties instance = null; 
 	private Properties property = null;
@@ -35,7 +35,7 @@ public class DIProperties {
 	
 	private Properties initiate(String path){
 		Properties prop = new Properties();
-		input = DIProperties.class.getClassLoader().getResourceAsStream(path);
+		InputStream input = DIProperties.class.getClassLoader().getResourceAsStream(path);
 		try {
 			logger.info("Reading the property file:" + path);	
 
@@ -89,20 +89,33 @@ public class DIProperties {
 		return Paths.get(DIConstants.PROPERTIES_PATH, DIConstants.PROPERTIES_FILE_PATH);
 	}
 	
-	public void setPropertyPath(String path){
-		property = initiate(path);
-		propertyValue.clear();
-		propertyValue = null;
-		String pathValue = path + DIConstants.PROPERTIES_VALUE_FILE_PATH;
+	public void setPropertyPath(String propertypath){
+		property.clear();
+		property = null;
+		property = initiate(propertypath);
+		String pathValue = propertypath + DIConstants.PROPERTIES_VALUE_FILE_PATH;
 		if(DIFiles.isValidFile(pathValue)){
+			propertyValue.clear();
+			propertyValue = null;
 			propertyValue = initiate(pathValue);
 		}
 	}
 	
-	public void setPropertyValuePath(String path){
-		propertyValue = initiate(path);
+	public void setPropertyPathandValue(String propertypath, String propertyValuePath){
+		setPropertyPath(propertypath);
+		setPropertyValuePath(propertyValuePath);
 	}
 	
+	public void setPropertyValuePath(String propertyValuePath){
+		propertyValue = initiate(propertyValuePath);
+	}
+	
+	public void dispose(){
+		property.clear();
+		property = null;	
+		propertyValue.clear();
+		propertyValue = null;	
+	}
 	
 
 }
