@@ -9,43 +9,44 @@ import java.util.List;
 
 public class DIFiles {
 
-	public static List<String> getEveryLinesFromFile(String path){
+	public static List<String> getEveryLinesFromFile(String path) {
 		List<String> lines = null;
 		try {
-			lines = Files.readAllLines(Paths.get(path), Charset.defaultCharset());
+			lines = Files.readAllLines(Paths.get(path),
+					Charset.defaultCharset());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			return lines;
+		return lines;
 	}
-	
-	public static List<String> getEveryLinesFromFile(String path, Charset encoding){
+
+	public static List<String> getEveryLinesFromFile(String path,
+			Charset encoding) {
 		List<String> lines = null;
 		try {
 			lines = Files.readAllLines(Paths.get(path), encoding);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-			return lines;
+		return lines;
 	}
-	
-	public static String getTextFromFile(String path){
+
+	public static String getTextFromFile(String path) {
 		String content = null;
 		try {
 			content = readFile(path, Charset.defaultCharset());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return content;
 	}
-	
-	
-	public static String getTextFromFile(String path, Charset encoding){
+
+	public static String getTextFromFile(String path, Charset encoding) {
 		String content = null;
-		if(encoding == null){
-				content = getTextFromFile(path);
-		}else{
+		if (encoding == null) {
+			content = getTextFromFile(path);
+		} else {
 			try {
 				content = readFile(path, encoding);
 			} catch (IOException e) {
@@ -54,22 +55,20 @@ public class DIFiles {
 		}
 		return content;
 	}
-	
-	public static boolean isValidFile(String path){
+
+	public static boolean isValidFile(String path) {
 		File file = new File(path);
-	    if (file.exists() && file.isFile())
-	    {
-	    	return true;
-	    }else{
-	    	return false;
-	    }
+		if (file.exists() && file.isFile()) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	
-	private static String readFile(String path, Charset encoding) 
-			  throws IOException 
-			{
-			  byte[] encoded = Files.readAllBytes(Paths.get(path));
-			  return new String(encoded, encoding);
-			}
-	
+
+	private static String readFile(String path, Charset encoding)
+			throws IOException {
+		byte[] encoded = Files.readAllBytes(Paths.get(path));
+		return new String(encoded, encoding);
+	}
+
 }

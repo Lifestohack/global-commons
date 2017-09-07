@@ -14,33 +14,39 @@ import org.commons.constants.DIConstants;
 import org.commons.files.DIFiles;
 
 public class DIProperties {
-	
-	private static final Logger logger = LogManager.getLogger(DIProperties.class);
-	private static DIProperties instance = null; 
+
+	private static final Logger logger = LogManager
+			.getLogger(DIProperties.class);
+	private static DIProperties instance = null;
 	private Properties property = null;
 	private Properties propertyValue = null;
-	
-	public static DIProperties getInstance(){
-		if(instance == null){
-			instance =  new DIProperties();
+
+	public static DIProperties getInstance() {
+		if (instance == null) {
+			instance = new DIProperties();
 		}
 		return instance;
-		
-	}
-	
-	private DIProperties() {
-		property = initiate(Paths.get(DIConstants.PROPERTIES_PATH, DIConstants.PROPERTIES_FILE_PATH).toString());
-		propertyValue = initiate(Paths.get(DIConstants.PROPERTIES_PATH, DIConstants.PROPERTIES_FILE_PATH + DIConstants.PROPERTIES_VALUE_FILE_PATH).toString());
-	}
-	
-	private Properties initiate(String path){
-		Properties prop = new Properties();
-		InputStream input = DIProperties.class.getClassLoader().getResourceAsStream(path);
-		try {
-			logger.info("Reading the property file:" + path);	
 
-				input = new FileInputStream(path);
-		
+	}
+
+	private DIProperties() {
+		property = initiate(Paths.get(DIConstants.PROPERTIES_PATH,
+				DIConstants.PROPERTIES_FILE_PATH).toString());
+		propertyValue = initiate(Paths.get(
+				DIConstants.PROPERTIES_PATH,
+				DIConstants.PROPERTIES_FILE_PATH
+						+ DIConstants.PROPERTIES_VALUE_FILE_PATH).toString());
+	}
+
+	private Properties initiate(String path) {
+		Properties prop = new Properties();
+		InputStream input = DIProperties.class.getClassLoader()
+				.getResourceAsStream(path);
+		try {
+			logger.info("Reading the property file:" + path);
+
+			input = new FileInputStream(path);
+
 			try {
 				prop.load(input);
 			} catch (IOException e) {
@@ -48,8 +54,8 @@ public class DIProperties {
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
-				logger.info(path + " is not found.");
-				e.printStackTrace();		
+			logger.info(path + " is not found.");
+			e.printStackTrace();
 		} finally {
 			if (input != null) {
 				try {
@@ -59,63 +65,65 @@ public class DIProperties {
 				}
 			}
 		}
-		
+
 		return prop;
 	}
-	
-	public String getProperty(String key){
+
+	public String getProperty(String key) {
 		String value = property.getProperty(key);
 		String valueSign = value.substring(0, 1);
-		if(valueSign == "$" || valueSign.equals("$")){
-			value =getFunctionalProperty(key, value);
+		if (valueSign == "$" || valueSign.equals("$")) {
+			value = getFunctionalProperty(key, value);
 		}
 		return value;
 	}
-	
-	private String getFunctionalProperty(String key, String value){
-		if(propertyValue == null){
+
+	private String getFunctionalProperty(String key, String value) {
+		if (propertyValue == null) {
 			return value;
-		}else{
+		} else {
 			return propertyValue.getProperty(key + "." + value);
 		}
-		
+
 	}
-	
-	public void setProperty(String key, String value){
+
+	public void setProperty(String key, String value) {
 		property.setProperty(key, value);
 	}
-	
-	public Path getPropertyPath(){
-		return Paths.get(DIConstants.PROPERTIES_PATH, DIConstants.PROPERTIES_FILE_PATH);
+
+	public Path getPropertyPath() {
+		return Paths.get(DIConstants.PROPERTIES_PATH,
+				DIConstants.PROPERTIES_FILE_PATH);
 	}
-	
-	public void setPropertyPath(String propertypath){
+
+	public void setPropertyPath(String propertypath) {
 		property.clear();
 		property = null;
 		property = initiate(propertypath);
-		String pathValue = propertypath + DIConstants.PROPERTIES_VALUE_FILE_PATH;
-		if(DIFiles.isValidFile(pathValue)){
+		String pathValue = propertypath
+				+ DIConstants.PROPERTIES_VALUE_FILE_PATH;
+		if (DIFiles.isValidFile(pathValue)) {
 			propertyValue.clear();
 			propertyValue = null;
 			propertyValue = initiate(pathValue);
 		}
 	}
-	
-	public void setPropertyPathandValue(String propertypath, String propertyValuePath){
+
+	public void setPropertyPathandValue(String propertypath,
+			String propertyValuePath) {
 		setPropertyPath(propertypath);
 		setPropertyValuePath(propertyValuePath);
 	}
-	
-	public void setPropertyValuePath(String propertyValuePath){
+
+	public void setPropertyValuePath(String propertyValuePath) {
 		propertyValue = initiate(propertyValuePath);
 	}
-	
-	public void dispose(){
+
+	public void dispose() {
 		property.clear();
-		property = null;	
+		property = null;
 		propertyValue.clear();
-		propertyValue = null;	
+		propertyValue = null;
 	}
-	
 
 }
