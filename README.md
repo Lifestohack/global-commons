@@ -11,6 +11,8 @@ Each and every time I was involved in some projects there were similar things th
 -> Create a new Excel File
 -> Read Properties and functional properties files
 -> Operating System Validator
+-> Log4j Integration
+-> JUnit Integration
 
 #To Dos
 
