@@ -7,8 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -16,7 +17,6 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.commons.logger.DILogger;
 
 public class DIExcelManager {
 
@@ -25,8 +25,7 @@ public class DIExcelManager {
 	
 	
 	
-	 private static final Logger logger =
-		        Logger.getLogger(DILogger.class.getName());
+	private static final Logger logger = LogManager.getLogger(DIExcelManager.class);
 	
 	
 	private FileOutputStream out = null;

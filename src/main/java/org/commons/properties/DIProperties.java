@@ -7,15 +7,15 @@ import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.commons.constants.DIConstants;
 import org.commons.files.DIFiles;
-import org.commons.logger.DILogger;
 
 public class DIProperties {
 	
-	private static final Logger logger = Logger.getLogger(DILogger.class.getName());
+	private static final Logger logger = LogManager.getLogger(DIProperties.class);
 	private static DIProperties instance = null; 
 	private Properties property = null;
 	private Properties propertyValue = null;
@@ -44,7 +44,7 @@ public class DIProperties {
 			try {
 				prop.load(input);
 			} catch (IOException e) {
-				logger.severe(e.toString());
+				logger.info(e.toString());
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e) {
