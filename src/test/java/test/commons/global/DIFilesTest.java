@@ -27,10 +27,10 @@ public class DIFilesTest {
 		boolean fileExists = DIFiles.isValidFile("C:\\Users\\Diwas Bhattarai\\diwas.txt");
 		assertEquals(fileExists, true);
 
-		String textfromFile = DIFiles.getTextFromFile("C:\\Users\\Diwas Bhattarai\\diwas.txt", Charset.forName("UTF-8"));
+		String textfromFile = DIFiles.getTextFromFile("C:\\Users\\Diwas Bhattarai\\diwas.txt",
+				Charset.forName("UTF-8"));
 		assertEquals(textfromFile, textToSave);
-		
-		
+
 	}
 
 }
