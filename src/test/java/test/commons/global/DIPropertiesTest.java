@@ -39,7 +39,7 @@ public class DIPropertiesTest {
 	@Test
 	public void setPropertyPathandValueTest() {
 		DIProperties diPropertiestest = DIProperties.getInstance();
-		diPropertiestest.setPropertyPathandValue(
+		diPropertiestest.setPropertyandValuePath(
 				"src/main/resources/Properties/functional.properties.test",
 				null);
 		String propertyValue = diPropertiestest.getProperty("example4");

@@ -17,6 +17,7 @@ public class DIProperties {
 
 	private static final Logger logger = LogManager
 			.getLogger(DIProperties.class);
+
 	private static DIProperties instance = null;
 	private Properties property = null;
 	private Properties propertyValue = null;
@@ -31,15 +32,17 @@ public class DIProperties {
 	}
 
 	private DIProperties() {
-		property = initiate(Paths.get(DIConstants.PROPERTIES_PATH,
+		property = ReadProperty(Paths.get(DIConstants.PROPERTIES_PATH,
 				DIConstants.PROPERTIES_FILE_PATH).toString());
-		propertyValue = initiate(Paths.get(
+		propertyValue = ReadProperty(Paths.get(
 				DIConstants.PROPERTIES_PATH,
 				DIConstants.PROPERTIES_FILE_PATH
 						+ DIConstants.PROPERTIES_VALUE_FILE_PATH).toString());
-		technicalProperty = initiate(Paths.get(DIConstants.PROPERTIES_PATH,
+		technicalProperty = ReadProperty(Paths.get(DIConstants.PROPERTIES_PATH,
 				DIConstants.TECHNICAL_PROPERTIES).toString());
 	}
+
+	// Getting Property Value
 
 	public String getProperty(String key) {
 		String value = property.getProperty(key);
@@ -58,13 +61,35 @@ public class DIProperties {
 		}
 	}
 
+	public String getTechnicalProperty(String key) {
+		return technicalProperty.getProperty(key);
+	}
+
+	// Setting Property Value
+
 	public void setProperty(String key, String value) {
 		property.setProperty(key, value);
 	}
 
+	public void setFunctionalProperty(String key, String value) {
+		propertyValue.setProperty(key, value);
+	}
+
+	public void setTechnicalProperty(String key, String value) {
+		technicalProperty.setProperty(key, value);
+	}
+
+	// Getting Property Path
+
 	public Path getPropertyPath() {
 		return Paths.get(DIConstants.PROPERTIES_PATH,
 				DIConstants.PROPERTIES_FILE_PATH);
+	}
+
+	public Path getPropertyValuePath() {
+		return Paths.get(DIConstants.PROPERTIES_PATH,
+				DIConstants.PROPERTIES_FILE_PATH
+						+ DIConstants.PROPERTIES_VALUE_FILE_PATH);
 	}
 
 	public Path getTechnicalPropertyPath() {
@@ -72,43 +97,47 @@ public class DIProperties {
 				DIConstants.TECHNICAL_PROPERTIES);
 	}
 
+	// Setting Property Path
+
 	public void setPropertyPath(String propertypath) {
-		property.clear();
 		property = null;
-		property = initiate(propertypath);
+		property = ReadProperty(propertypath);
 		String pathValue = propertypath
 				+ DIConstants.PROPERTIES_VALUE_FILE_PATH;
 		if (DIFiles.isValidFile(pathValue)) {
-			propertyValue.clear();
 			propertyValue = null;
-			propertyValue = initiate(pathValue);
+			propertyValue = ReadProperty(pathValue);
 		}
 	}
 
-	public void setPropertyPathandValue(String propertypath,
+	public void setPropertyandValuePath(String propertypath,
 			String propertyValuePath) {
 		setPropertyPath(propertypath);
 		setPropertyValuePath(propertyValuePath);
 	}
 
 	public void setPropertyValuePath(String propertyValuePath) {
-		propertyValue = initiate(propertyValuePath);
+		propertyValue = ReadProperty(propertyValuePath);
 	}
 
 	public void setTechnialPropertyPath(String propertypath) {
-		technicalProperty.clear();
 		technicalProperty = null;
-		technicalProperty = initiate(propertypath);
+		technicalProperty = ReadProperty(propertypath);
 	}
 
 	public void dispose() {
-		property.clear();
-		property = null;
-		propertyValue.clear();
-		propertyValue = null;
+		if (property != null) {
+			property = null;
+		}
+		if (propertyValue != null) {
+			propertyValue = null;
+		}
+		if (technicalProperty != null) {
+			technicalProperty = null;
+		}
 	}
 
-	private Properties initiate(String path) {
+	public Properties ReadProperty(String path) {
 		Properties prop = new Properties();
 		InputStream input = DIProperties.class.getClassLoader()
 				.getResourceAsStream(path);
