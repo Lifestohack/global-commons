@@ -20,6 +20,7 @@ public class DIProperties {
 	private static DIProperties instance = null;
 	private Properties property = null;
 	private Properties propertyValue = null;
+	private Properties technicalProperty = null;
 
 	public static DIProperties getInstance() {
 		if (instance == null) {
@@ -36,6 +37,75 @@ public class DIProperties {
 				DIConstants.PROPERTIES_PATH,
 				DIConstants.PROPERTIES_FILE_PATH
 						+ DIConstants.PROPERTIES_VALUE_FILE_PATH).toString());
+		technicalProperty = initiate(Paths.get(DIConstants.PROPERTIES_PATH,
+				DIConstants.TECHNICAL_PROPERTIES).toString());
+	}
+
+	public String getProperty(String key) {
+		String value = property.getProperty(key);
+		String valueSign = value.substring(0, 1);
+		if (valueSign == "$" || valueSign.equals("$")) {
+			value = getFunctionalProperty(key, value);
+		}
+		return value;
+	}
+
+	public String getFunctionalProperty(String key, String value) {
+		if (propertyValue == null) {
+			return value;
+		} else {
+			return propertyValue.getProperty(key + "." + value);
+		}
+	}
+
+	public void setProperty(String key, String value) {
+		property.setProperty(key, value);
+	}
+
+	public Path getPropertyPath() {
+		return Paths.get(DIConstants.PROPERTIES_PATH,
+				DIConstants.PROPERTIES_FILE_PATH);
+	}
+
+	public Path getTechnicalPropertyPath() {
+		return Paths.get(DIConstants.PROPERTIES_PATH,
+				DIConstants.TECHNICAL_PROPERTIES);
+	}
+
+	public void setPropertyPath(String propertypath) {
+		property.clear();
+		property = null;
+		property = initiate(propertypath);
+		String pathValue = propertypath
+				+ DIConstants.PROPERTIES_VALUE_FILE_PATH;
+		if (DIFiles.isValidFile(pathValue)) {
+			propertyValue.clear();
+			propertyValue = null;
+			propertyValue = initiate(pathValue);
+		}
+	}
+
+	public void setPropertyPathandValue(String propertypath,
+			String propertyValuePath) {
+		setPropertyPath(propertypath);
+		setPropertyValuePath(propertyValuePath);
+	}
+
+	public void setPropertyValuePath(String propertyValuePath) {
+		propertyValue = initiate(propertyValuePath);
+	}
+
+	public void setTechnialPropertyPath(String propertypath) {
+		technicalProperty.clear();
+		technicalProperty = null;
+		technicalProperty = initiate(propertypath);
+	}
+
+	public void dispose() {
+		property.clear();
+		property = null;
+		propertyValue.clear();
+		propertyValue = null;
 	}
 
 	private Properties initiate(String path) {
@@ -67,63 +137,6 @@ public class DIProperties {
 		}
 
 		return prop;
-	}
-
-	public String getProperty(String key) {
-		String value = property.getProperty(key);
-		String valueSign = value.substring(0, 1);
-		if (valueSign == "$" || valueSign.equals("$")) {
-			value = getFunctionalProperty(key, value);
-		}
-		return value;
-	}
-
-	private String getFunctionalProperty(String key, String value) {
-		if (propertyValue == null) {
-			return value;
-		} else {
-			return propertyValue.getProperty(key + "." + value);
-		}
-
-	}
-
-	public void setProperty(String key, String value) {
-		property.setProperty(key, value);
-	}
-
-	public Path getPropertyPath() {
-		return Paths.get(DIConstants.PROPERTIES_PATH,
-				DIConstants.PROPERTIES_FILE_PATH);
-	}
-
-	public void setPropertyPath(String propertypath) {
-		property.clear();
-		property = null;
-		property = initiate(propertypath);
-		String pathValue = propertypath
-				+ DIConstants.PROPERTIES_VALUE_FILE_PATH;
-		if (DIFiles.isValidFile(pathValue)) {
-			propertyValue.clear();
-			propertyValue = null;
-			propertyValue = initiate(pathValue);
-		}
-	}
-
-	public void setPropertyPathandValue(String propertypath,
-			String propertyValuePath) {
-		setPropertyPath(propertypath);
-		setPropertyValuePath(propertyValuePath);
-	}
-
-	public void setPropertyValuePath(String propertyValuePath) {
-		propertyValue = initiate(propertyValuePath);
-	}
-
-	public void dispose() {
-		property.clear();
-		property = null;
-		propertyValue.clear();
-		propertyValue = null;
 	}
 
 }
