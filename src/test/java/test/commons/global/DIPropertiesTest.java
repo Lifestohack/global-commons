@@ -2,6 +2,8 @@ package test.commons.global;
 
 import static org.junit.Assert.assertEquals;
 
+import java.nio.file.Path;
+
 import org.commons.properties.DIProperties;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -36,7 +38,7 @@ public class DIPropertiesTest {
 		diPropertiestest.dispose();
 	}
 
-	@Test
+	@Test (expected = NullPointerException.class)
 	public void setPropertyPathandValueTest() {
 		DIProperties diPropertiestest = DIProperties.getInstance();
 		diPropertiestest.setPropertyandValuePath(
@@ -65,6 +67,23 @@ public class DIPropertiesTest {
 		} finally {
 			diPropertiestest.dispose();
 		}
+	}
+	
+	@Test
+	public void getTechnicalPropertyTest() {
+		DIProperties diPropertiestest = DIProperties.getInstance();
+		String technicalProperty = diPropertiestest.getTechnicalProperty("browser");
+		assertEquals("firefox", technicalProperty);
+		diPropertiestest.dispose();
+	}
+	
+	@Test
+	public void setTechnicalPropertyTest() {
+		DIProperties diPropertiestest = DIProperties.getInstance();
+		diPropertiestest.setTechnicalProperty("browser", "internetexplorer");
+		String technicalProperty = diPropertiestest.getTechnicalProperty("browser");
+		assertEquals("internetexplorer", technicalProperty);
+		diPropertiestest.dispose();
 	}
 
 }

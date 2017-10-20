@@ -112,6 +112,9 @@ public class DIProperties {
 
 	public void setPropertyandValuePath(String propertypath,
 			String propertyValuePath) {
+		if(propertypath==null){
+			
+		}
 		setPropertyPath(propertypath);
 		setPropertyValuePath(propertyValuePath);
 	}
@@ -135,6 +138,8 @@ public class DIProperties {
 		if (technicalProperty != null) {
 			technicalProperty = null;
 		}
+		
+		instance = null;
 	}
 
 	public Properties ReadProperty(String path) {
