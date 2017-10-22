@@ -1,20 +1,17 @@
 package org.commons.selenium;
 
+import java.lang.reflect.Method;
+
 import org.commons.constants.DIConstants;
 import org.commons.models.DIWebElements;
 import org.commons.properties.DIProperties;
-import org.openqa.selenium.By;
 
 public class DIWebPageActions extends DIWebDriver {
 
-	DIWebElements diwas = new DIWebElements();
 	DIWebPageElement webPageElement = null;
 	
 	public DIWebPageActions(){
 		webPageElement = new DIWebPageElement();
-		diwas.setElementName("a");
-		diwas.setElementValue("diwas");
-		diwas.setLocateType("id");
 	}
 	
 
@@ -28,8 +25,8 @@ public class DIWebPageActions extends DIWebDriver {
 		getDriver().get(url);
 	}
 
-	public void Click() {
-		webPageElement.findElement(getDriver(), diwas).click();
+	public void Click(DIWebElements guiElement) {
+		webPageElement.findElement(getDriver(), guiElement).click();
 	}
 
 	public void Quit() {
