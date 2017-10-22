@@ -1,16 +1,16 @@
 package test.commons.global.selenium;
 
 import org.commons.models.DIWebElements;
-import org.commons.selenium.SelectorsManger;
+import org.commons.selenium.DISelectorsManager;
 
-public class Page1 extends SelectorsManger{
+public class Page1 extends DISelectorsManager{
 
 	public Page1() {
 		super(Page1.class);
 		// TODO Auto-generated constructor stub
 	}
 
-	public DIWebElements diwas, bhattarai;
+	public DIWebElements dashboard;
 
 		
 	
@@ -20,7 +20,7 @@ public class Page1 extends SelectorsManger{
 	}
 
 	public void goToAboutUsPage() {
-		Click(diwas);
+		Click(dashboard);
 	}
 
 }

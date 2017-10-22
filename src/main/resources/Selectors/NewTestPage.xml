@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+<pageMap>
+	<guielement>
+		<name>dashboard</name>
+		<select>label</select>
+		<locate>xpath</locate>
+		<value>/html/body/header/div[2]/nav/div/ul/li[5]/a</value>
+	</guielement>
+	<guielement>
+		<name>accounts</name>
+		<select>button</select>
+		<locate>id</locate>
+		<value>mmcr:primaryMenu:accounts:link</value>
+	</guielement>
+	<guielement>
+		<name>vehicles</name>
+		<select>button</select>
+		<locate>id</locate>
+		<value>mmcr:primaryMenu:vehicles:link</value>
+	</guielement>
+	<guielement>
+		<name>logout</name>
+		<select>button</select>
+		<locate>xpath</locate>
+		<value>//a[@data-original-title="Logout"] </value>
+	</guielement>
+	</pageMap>
+</page>

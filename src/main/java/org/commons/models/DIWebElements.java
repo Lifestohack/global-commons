@@ -1,41 +1,56 @@
 package org.commons.models;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "guielement")
 public class DIWebElements {
 
-	private String elementName = null;
-	private WebElementSelectType selectType = null;
-	private String locateType = null;
-	private String elementValue = null;
+	private String name;
+	private String locate;
+	private String select;
+	private String value;
 
-	public void setElementName(String elementName) {
-		this.elementName = elementName;
+	public void setElementName(String name) {
+		this.name = name;
 	}
 
+	@XmlElement(name = "name")
 	public String getElementName() {
-		return elementName;
+		return name;
 	}
 
-	public void setLocateType(String locateType) {
-		this.locateType = locateType;
+	public void setLocateType(String locate) {
+		this.locate = locate;
 	}
 
+	@XmlElement(name = "locate")
 	public String getLocateType() {
-		return locateType;
+		return locate;
 	}
 
-	public void setElementValue(String elementValue) {
-		this.elementValue = elementValue;
+	public void setSelectType(String select) {
+		this.select = select;
 	}
 
+	@XmlElement(name = "select")
+	public String getSelectType() {
+		return select;
+	}
+
+	public void setElementValue(String value) {
+		this.value = value;
+	}
+
+	@XmlElement(name = "value")
 	public String getElementValue() {
-		return elementValue;
+		return value;
+	}
+	
+	@Override
+	public String toString() {
+		return "Element [name=" + name + ", locateType=" + locate
+				+ ", selectType=" + select + ", elementValue=" + value + "]";
 	}
 
-	public void setSelectType(WebElementSelectType selectType) {
-		this.selectType = selectType;
-	}
-
-	public WebElementSelectType getSelectType() {
-		return selectType;
-	}
 }
