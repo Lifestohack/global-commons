@@ -5,7 +5,8 @@ Each and every time I was involved in some projects there were similar things th
 
 #Done
 
--> Read Files
+-> Read Text based Files
+-> Write Text based Files
 -> CSV To Excel Converter
 -> Excel to CSV Converter
 -> Create a new Excel File
@@ -16,7 +17,14 @@ Each and every time I was involved in some projects there were similar things th
 
 #To Dos
 
--> Selenium Support????
+-> Selenium Support
+-> TestNG
+-> Rest support on dev branch
+
+#Working on
+-> Selenium Support
+-> TestNG
+
 
 
 #Used Framework
@@ -25,3 +33,5 @@ Each and every time I was involved in some projects there were similar things th
 -> Apache POI
 -> Log4j
 -> Junit4
+-> Selenium
+-> TestNG
