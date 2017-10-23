@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.logging.log4j.message.Message;
 import org.commons.models.DIWebElements;
 
@@ -26,8 +27,7 @@ public class DISelectorAdapter extends XmlAdapter<DISelectorAdapter.GUIElements,
 
 	@Override
 	public GUIElements marshal(Map<String, DIWebElements> v) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotImplementedException("Marshal has not been implemented. Please implement it.");
 	}
 
 	

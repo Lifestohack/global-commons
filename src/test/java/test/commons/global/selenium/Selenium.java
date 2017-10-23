@@ -1,8 +1,5 @@
 package test.commons.global.selenium;
 
-import java.lang.reflect.Method;
-
-import org.commons.models.DIWebElements;
 import org.commons.selenium.TestDataProvider;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;

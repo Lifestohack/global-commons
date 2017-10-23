@@ -9,6 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.poi.ss.formula.functions.T;
 import org.commons.models.DIMapWebElements;
 import org.commons.models.DIWebElements;
 
@@ -23,50 +24,35 @@ public class DISelectorsManager extends DIWebPageActions {
 
 	public void getXML() {
 		guiElementsMap = new HashMap<String, DIWebElements>();
-
 		File file = new File("src/main/resources/Selectors/NewTestPage.xml");
-
-		
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(DIMapWebElements.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			
 			DIMapWebElements empMap = (DIMapWebElements) jaxbUnmarshaller.unmarshal(file);
-
-//			for (String empId : empMap.getwebElements().keySet()) {
-//				System.out.println(empMap.getwebElements().get(empId).getElementName());
-//				System.out.println(empMap.getwebElements().get(empId).getElementValue());
-//				
-//				guiElementsMap.put(empMap.getwebElements().get(empId).getElementName(), (DIWebElements) empMap.getwebElements());
-//			}
-			
 			guiElementsMap = empMap.getwebElements();
-			
+
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-
-		// guiElementsMap.put("diwas", ds1);
-		// guiElementsMap.put("bhattarais", ds2);
 	}
 
-	public void getSelectors(Class clazz) {
+	public void getSelectors(Class<T> clazz) {
 
 		for (Field field : clazz.getFields()) {
-			if (containsKey(field.getName())) {
-				DIWebElements elementFromMap = guiElementsMap.get(field.getName());
-				try {
-					field.set(this, elementFromMap);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			if (isWebElement(field)) {
+				if (containsKey(field.getName())) {
+					DIWebElements elementFromMap = guiElementsMap.get(field.getName());
+					try {
+						field.set(this, elementFromMap);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
-
 			}
-
 		}
+
 	}
 
 	public boolean containsKey(String key) {
@@ -80,12 +66,8 @@ public class DISelectorsManager extends DIWebPageActions {
 
 	}
 
-	// tryd d = new tryd();
-	//
-	//
-	// for (Field field : d.getClass().getFields()) {
-	// System.out.println(field.getName());
-	// }
-	//
+	private boolean isWebElement(Field field) {
+		return field.getType().equals(DIWebElements.class);
+	}
 
 }

@@ -36,7 +36,7 @@ public class DIWebPageElement {
 		return null;
 	}
 
-	public WebElement findElement(WebDriver driver, DIWebElements guiElement) {
+	public static WebElement findElement(WebDriver driver, DIWebElements guiElement) {
 		WebElement element = null;
 		try {
 			element = driver.findElement(

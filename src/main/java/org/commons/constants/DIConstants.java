@@ -8,6 +8,6 @@ public class DIConstants {
 	public static final String BROWSER_PROPERTY = "browser";
 	public static final String BROWSERPATH_PROPERTY = "browserPath";
 	public static final String URL_PROPERTY = "url";
-	
-
+	public static final long DEFAULT_TIMEOUT = 60000;
+	public static final long DEFAULT_INVESTIGATION_TIME = 5000;
 }
