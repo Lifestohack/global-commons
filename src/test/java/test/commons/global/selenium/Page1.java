@@ -16,11 +16,11 @@ public class Page1 extends DISelectorsManager{
 	
 
 	public void loadurl() {
-		Load();
+		load();
 	}
 
 	public void goToAboutUsPage() {
-		Click(dashboard);
+		click(dashboard);
 	}
 
 }

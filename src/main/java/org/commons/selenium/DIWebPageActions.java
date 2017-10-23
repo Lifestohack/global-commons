@@ -15,21 +15,21 @@ public class DIWebPageActions extends DIWebDriver {
 	}
 	
 
-	public void Load() {
+	public void load() {
 		getDriver().get(
 				DIProperties.getInstance()
 						.getProperty(DIConstants.URL_PROPERTY));
 	}
 
-	public void Load(String url) {
+	public void load(String url) {
 		getDriver().get(url);
 	}
 
-	public void Click(DIWebElements guiElement) {
+	public void click(DIWebElements guiElement) {
 		webPageElement.findElement(getDriver(), guiElement).click();
 	}
 
-	public void Quit() {
+	public void quit() {
 		getDriver().quit();
 	}
 
