@@ -10,4 +10,6 @@ public class DIConstants {
 	public static final String URL_PROPERTY = "url";
 	public static final long DEFAULT_TIMEOUT = 60000;
 	public static final long DEFAULT_INVESTIGATION_TIME = 5000;
+	public static final String LOG_SAVE_PATH = "savepathforlogfile";
+	public static final String LOG_FILENAME = "\\di.log";
 }
