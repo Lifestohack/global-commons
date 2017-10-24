@@ -9,21 +9,27 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.formula.functions.T;
 import org.commons.models.DIMapWebElements;
 import org.commons.models.DIWebElements;
 
 public class DISelectorsManager extends DIWebPageActions {
 
-	Map<String, DIWebElements> guiElementsMap;
+	private static final Logger logger = LogManager.getLogger(DIWebPageActions.class);
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DISelectorsManager(Class clazz) {
-		getXML();
+		if (clazz == null) {
+			logger.fatal("Did not expect null for the parameter clazz " + this.getClass().toString()
+					+ ". Throwing the Exception.");
+		}
 		getSelectors(clazz);
 	}
 
-	public void getXML() {
-		guiElementsMap = new HashMap<String, DIWebElements>();
+	public void getSelectors(Class<T> clazz) {
+		Map<String, DIWebElements> guiElementsMap = new HashMap<String, DIWebElements>();
 		File file = new File("src/main/resources/Selectors/NewTestPage.xml");
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(DIMapWebElements.class);
@@ -34,13 +40,16 @@ public class DISelectorsManager extends DIWebPageActions {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
+
+		initializeSelectors(clazz, guiElementsMap);
+
 	}
 
-	public void getSelectors(Class<T> clazz) {
+	public void initializeSelectors(Class<T> clazz, Map<String, DIWebElements> guiElementsMap) {
 
 		for (Field field : clazz.getFields()) {
 			if (isWebElement(field)) {
-				if (containsKey(field.getName())) {
+				if (containsKey(field.getName(), guiElementsMap)) {
 					DIWebElements elementFromMap = guiElementsMap.get(field.getName());
 					try {
 						field.set(this, elementFromMap);
@@ -55,7 +64,7 @@ public class DISelectorsManager extends DIWebPageActions {
 
 	}
 
-	public boolean containsKey(String key) {
+	public boolean containsKey(String key, Map<String, DIWebElements> guiElementsMap) {
 		boolean keyexists = false;
 		DIWebElements value = guiElementsMap.get(key);
 		if (value != null) {
