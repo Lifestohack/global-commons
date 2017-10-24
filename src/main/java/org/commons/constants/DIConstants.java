@@ -1,7 +1,7 @@
 package org.commons.constants;
 
 public class DIConstants {
-	public static final String PROPERTIES_PATH = "src/main/resources/Properties";
+	public static final String PROPERTIES_PATH = "src/test/resources/Properties";
 	public static final String PROPERTIES_FILE_PATH = "functional.properties";
 	public static final String PROPERTIES_VALUE_FILE_PATH = ".values";
 	public static final String TECHNICAL_PROPERTIES = "technical.properties";
