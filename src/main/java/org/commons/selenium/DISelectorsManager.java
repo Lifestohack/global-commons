@@ -30,7 +30,7 @@ public class DISelectorsManager extends DIWebPageActions {
 
 	public void getSelectors(Class<T> clazz) {
 		Map<String, DIWebElements> guiElementsMap = new HashMap<String, DIWebElements>();
-		File file = new File("src/main/resources/Selectors/NewTestPage.xml");
+		File file = new File("src/test/resources/Selectors/NewTestPage.xml");
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(DIMapWebElements.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
