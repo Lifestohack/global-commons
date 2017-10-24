@@ -12,12 +12,13 @@ import javax.xml.bind.Unmarshaller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.formula.functions.T;
+import org.commons.logger.DILogger;
 import org.commons.models.DIMapWebElements;
 import org.commons.models.DIWebElements;
 
 public class DISelectorsManager extends DIWebPageActions {
 
-	private static final Logger logger = LogManager.getLogger(DIWebPageActions.class);
+	private static final Logger logger = LogManager.getLogger(DILogger.class);
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DISelectorsManager(Class clazz) {
