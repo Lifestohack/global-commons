@@ -1,15 +1,21 @@
 package org.commons.selenium;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.commons.constants.DIConstants;
+import org.commons.logger.DILogger;
 import org.commons.properties.DIProperties;
 
 public class DISetUp {
 
+	private static final Logger logger = LogManager.getLogger(DILogger.class);
+	
 	public static void setUpLogDirectory() {
 		String logDir = "";
 		if (System.getProperty(DIConstants.LOG_SAVE_PATH) != null) {
@@ -23,6 +29,10 @@ public class DISetUp {
 		DIProperties.getInstance().setTechnicalProperty(DIConstants.LOG_SAVE_PATH, logPath);
 		LoggerContext logContext = (LoggerContext) LogManager.getContext(false);
 		logContext.reconfigure();
+	}
+	
+	public static String getSelectorsPath() {
+		return  new File(DIConstants.RESOURCES_PATH, DIConstants.LOCATORS_PATH).toString();
 	}
 
 	private static String getCurrentTimeStamp() {
