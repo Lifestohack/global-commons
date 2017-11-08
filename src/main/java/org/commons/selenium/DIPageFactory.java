@@ -16,15 +16,14 @@ import org.commons.logger.DILogger;
 import org.commons.models.DIMapWebElements;
 import org.commons.models.DIWebElements;
 
-public class DISelectorsManager extends DIWebPageActions {
+public class DIPageFactory extends DIWebPageActions {
 
 	private static final Logger logger = LogManager.getLogger(DILogger.class);
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public DISelectorsManager(Class clazz) {
+	public DIPageFactory(Class clazz) {
 		if (clazz == null) {
-			logger.fatal("Did not expect null for the parameter clazz " + this.getClass().toString()
-					+ ". Throwing the Exception.");
+			logger.fatal("Did not expect null for the parameter clazz " + this.getClass().toString());
 		}
 		getSelectors(clazz);
 	}
