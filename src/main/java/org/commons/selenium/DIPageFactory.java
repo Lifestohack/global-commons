@@ -27,6 +27,7 @@ public class DIPageFactory  {
 		if (clazz == null) {
 			logger.fatal("Did not expect null for the parameter clazz " + this.getClass().toString());
 		}
+		
 		T pageObject = null;
 		
 		if(pageObjects == null) {
@@ -37,11 +38,53 @@ public class DIPageFactory  {
 			pageObject = (T) pageObjects.get(clazz.getSimpleName());
 		}else{
 			pageObject = instantiatePage(clazz);
-			getSelectors(clazz);
+			getSelectors(pageObject, clazz);
 			pageObjects.put(clazz.getSimpleName(), pageObject);
+		}	
+		return pageObject;	
+	}
+
+	public void getSelectors(Object page, Class clazz) {
+		Map<String, DIWebElements> guiElementsMap = new HashMap<String, DIWebElements>();
+		File file = new File(selectorToRead(clazz.getSimpleName())); 
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(DIMapWebElements.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			DIMapWebElements empMap = (DIMapWebElements) jaxbUnmarshaller.unmarshal(file);
+			guiElementsMap = empMap.getwebElements();
+
+		} catch (JAXBException e) {
+			logger.error(e.toString());
+			e.printStackTrace();
 		}
-		
-		return pageObject;		
+		initializeSelectors(page, clazz, guiElementsMap);
+	}
+
+	public void initializeSelectors(Object page, Class clazz, Map<String, DIWebElements> guiElementsMap) {
+
+		for (Field field : clazz.getFields()) {
+			if (isWebElement(field)) {
+				if (containsKey(field.getName(), guiElementsMap)) {
+					DIWebElements elementFromMap = guiElementsMap.get(field.getName());
+					try {
+						field.set(page, elementFromMap);
+					} catch (Exception e) {
+						logger.error(e.toString());
+						e.printStackTrace();
+					}
+
+				}
+			}
+		}
+	}
+
+	public static boolean containsKey(String key, Map<String, DIWebElements> guiElementsMap) {
+		boolean keyexists = false;
+		DIWebElements value = guiElementsMap.get(key);
+		if (value != null) {
+			keyexists = true;
+		}
+		return keyexists;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -56,59 +99,12 @@ public class DIPageFactory  {
 		return pageObject;
 	}
 
-	public <T> T getSelectors(Class<T> clazz) {
-		Map<String, DIWebElements> guiElementsMap = new HashMap<String, DIWebElements>();
-		File file = new File(selectorToRead(clazz.getSimpleName())); //get path for each page to do
-		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(DIMapWebElements.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			DIMapWebElements empMap = (DIMapWebElements) jaxbUnmarshaller.unmarshal(file);
-			guiElementsMap = empMap.getwebElements();
-
-		} catch (JAXBException e) {
-			logger.error(e.toString());
-			e.printStackTrace();
-		}
-		return initializeSelectors(clazz, guiElementsMap);
-	}
-
-	public <T>  T initializeSelectors(Class<T> clazz, Map<String, DIWebElements> guiElementsMap) {
-
-		for (Field field : clazz.getFields()) {
-			if (isWebElement(field)) {
-				if (containsKey(field.getName(), guiElementsMap)) {
-					DIWebElements elementFromMap = guiElementsMap.get(field.getName());
-					try {
-						field.set(this, elementFromMap);
-					} catch (Exception e) {
-						logger.error(e.toString());
-						e.printStackTrace();
-					}
-
-				}
-			}
-		}
-		return null;
-
-	}
-
-	public static boolean containsKey(String key, Map<String, DIWebElements> guiElementsMap) {
-		boolean keyexists = false;
-		DIWebElements value = guiElementsMap.get(key);
-		if (value != null) {
-			keyexists = true;
-		}
-
-		return keyexists;
-
-	}
-
 	private boolean isWebElement(Field field) {
 		return field.getType().equals(DIWebElements.class);
 	}
 	
 	private String selectorToRead(String fileToRead) {
-		return new File(DISetUp.getSelectorsPath(),"project1/"+ fileToRead).toString().concat(".xml");
+		return new File(DISetUp.getSelectorsPath(),"project1/"+ fileToRead).toString().concat(".xml"); //get path for each page to do
 	}
 
 }
