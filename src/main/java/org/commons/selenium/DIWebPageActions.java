@@ -34,6 +34,17 @@ public class DIWebPageActions extends DIWebPage {
 		}
 
 	}
+	
+	
+	public void useValue(DIWebElements guiElement, String text) {
+		waitUntilElementAvailable(guiElement);
+		try {
+			getElement(guiElement).sendKeys(text);
+		} catch (Exception e) {
+			logger.fatal("Element not Present: " + guiElement);
+			throw (e);
+		}
+	}
 
 	public void quit() {
 		getDriver().quit();
