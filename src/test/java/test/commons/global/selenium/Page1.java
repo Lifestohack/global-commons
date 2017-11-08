@@ -1,9 +1,9 @@
 package test.commons.global.selenium;
 
 import org.commons.models.DIWebElements;
-import org.commons.selenium.DISelectorsManager;
+import org.commons.selenium.DIPageFactory;
 
-public class Page1 extends DISelectorsManager{
+public class Page1 extends DIPageFactory{
 
 	public Page1() {
 		super(Page1.class);
