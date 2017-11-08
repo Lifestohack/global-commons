@@ -1,14 +1,9 @@
 package test.commons.global.selenium;
 
 import org.commons.models.DIWebElements;
-import org.commons.selenium.DIPageFactory;
+import org.commons.selenium.DIWebPageActions;
 
-public class Page1 extends DIPageFactory{
-
-	public Page1() {
-		super(Page1.class);
-		// TODO Auto-generated constructor stub
-	}
+public class Page1 extends DIWebPageActions{
 
 	public DIWebElements dashboard;
 
