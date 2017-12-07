@@ -15,38 +15,45 @@ import org.apache.logging.log4j.Logger;
 import org.commons.logger.DILogger;
 import org.commons.models.DIMapWebElements;
 import org.commons.models.DIWebElements;
+import org.openqa.selenium.WebDriver;
 
-public class DIPageFactory  {
+public class DIPageFactory {
+
+	private WebDriver driver;
 
 	private static final Logger logger = LogManager.getLogger(DILogger.class);
 
-	private HashMap<String, Object> pageObjects;
-	
+	private static HashMap<String, Object> pageObjects;
+
+	public DIPageFactory(WebDriver driver) {
+		setDriver(driver);
+	}
+
 	@SuppressWarnings({ "unchecked" })
-	public <T> T getPage(Class<T> clazz) {
+	public <T extends DIWebPageActions> T getPage(Class<T> clazz) {
 		if (clazz == null) {
 			logger.fatal("Did not expect null for the parameter clazz " + this.getClass().toString());
 		}
-		
+
 		T pageObject = null;
-		
-		if(pageObjects == null) {
+
+		if (pageObjects == null) {
 			pageObjects = new HashMap<String, Object>();
 		}
-		
+
 		if (pageObjects.containsKey(clazz.getSimpleName())) {
 			pageObject = (T) pageObjects.get(clazz.getSimpleName());
-		}else{
+		} else {
 			pageObject = instantiatePage(clazz);
 			getSelectors(pageObject, clazz);
 			pageObjects.put(clazz.getSimpleName(), pageObject);
-		}	
-		return pageObject;	
+		}
+		return pageObject;
 	}
 
-	public void getSelectors(Object page, Class clazz) {
+	public  void getSelectors(Object page, Class clazz) {
 		Map<String, DIWebElements> guiElementsMap = new HashMap<String, DIWebElements>();
-		File file = new File(selectorToRead(clazz.getSimpleName())); 
+		File file = new File(selectorToRead(clazz.getSimpleName()));
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(DIMapWebElements.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
@@ -60,7 +67,7 @@ public class DIPageFactory  {
 		initializeSelectors(page, clazz, guiElementsMap);
 	}
 
-	public void initializeSelectors(Object page, Class clazz, Map<String, DIWebElements> guiElementsMap) {
+	public  void initializeSelectors(Object page, Class clazz, Map<String, DIWebElements> guiElementsMap) {
 
 		for (Field field : clazz.getFields()) {
 			if (isWebElement(field)) {
@@ -78,7 +85,7 @@ public class DIPageFactory  {
 		}
 	}
 
-	public static boolean containsKey(String key, Map<String, DIWebElements> guiElementsMap) {
+	public  boolean containsKey(String key, Map<String, DIWebElements> guiElementsMap) {
 		boolean keyexists = false;
 		DIWebElements value = guiElementsMap.get(key);
 		if (value != null) {
@@ -86,25 +93,35 @@ public class DIPageFactory  {
 		}
 		return keyexists;
 	}
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private <T> T instantiatePage(Class<T> clazz) {
+	private  <T> T instantiatePage(Class<T> clazz) {
 		T pageObject = null;
 		try {
-			Constructor constructor = clazz.getConstructor();
-			pageObject = (T) constructor.newInstance();
+			Constructor constructor = clazz.getDeclaredConstructor(WebDriver.class);
+			pageObject = (T) constructor.newInstance(getDriver());
 		} catch (Exception e) {
 			logger.catching(e);
 		}
 		return pageObject;
 	}
 
-	private boolean isWebElement(Field field) {
+	private  boolean isWebElement(Field field) {
 		return field.getType().equals(DIWebElements.class);
 	}
-	
-	private String selectorToRead(String fileToRead) {
-		return new File(DISetUp.getSelectorsPath(),"project1/"+ fileToRead).toString().concat(".xml"); //get path for each page to do
+
+	private  String selectorToRead(String fileToRead) {
+		return new File(DISetUp.getSelectorsPath(), "project1/" + fileToRead).toString().concat(".xml"); // get path for
+																											// each page
+																											// to do
+	}
+
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
+
+	public WebDriver getDriver() {
+		return this.driver;
 	}
 
 }
