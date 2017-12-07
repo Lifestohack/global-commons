@@ -6,13 +6,15 @@ import org.commons.constants.DIConstants;
 import org.commons.logger.DILogger;
 import org.commons.models.DIWebElements;
 import org.commons.properties.DIProperties;
+import org.openqa.selenium.WebDriver;
 
 public class DIWebPageActions extends DIWebPage {
 
 	private static final Logger logger = LogManager.getLogger(DILogger.class);
-
-	public DIWebPageActions() {
-
+	
+	
+	public DIWebPageActions(WebDriver driver) {
+		super(driver);
 	}
 
 	public void load() {
@@ -49,4 +51,5 @@ public class DIWebPageActions extends DIWebPage {
 	public void quit() {
 		getDriver().quit();
 	}
+	
 }
