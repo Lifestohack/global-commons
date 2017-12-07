@@ -14,12 +14,13 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class DIWebPage extends DIWebDriver implements IDIWebPage{
-
-	public DIWebPage() {
-
-	}
+public class DIWebPage implements IDIWebPage {
 	
+	private WebDriver driver;
+
+	public DIWebPage(WebDriver driver) {
+		setDriver(driver);
+	}
 
 	public void waitUntilElementAvailable(final DIWebElements guiElement) {
 		waitUntilElementAvailable(guiElement, DIConstants.DEFAULT_TIMEOUT, DIConstants.DEFAULT_INVESTIGATION_TIME);
@@ -68,6 +69,11 @@ public class DIWebPage extends DIWebDriver implements IDIWebPage{
 		return DIWebPageElement.findElement(getDriver(), guiElement);
 	}
 
+	public void setDriver(WebDriver driver) {
+		this.driver = driver;
+	}
 
-	
+	public WebDriver getDriver() {
+		return this.driver;
+	}
 }
