@@ -13,7 +13,7 @@ public class Selenium extends TestCases{
 	
 	
 	@Test(dataProvider = "dataProvider", dataProviderClass = TestDataProvider.class)
-	public void Selenium(String testdataName) {
+	public void selenium(String testdataName) {
 		System.out.print(testdataName);
 		project.loadUrl();
 		project.goToAboutUsPage();

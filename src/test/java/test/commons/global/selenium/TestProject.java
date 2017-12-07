@@ -1,19 +1,20 @@
 package test.commons.global.selenium;
 
-public class TestProject {
+import org.commons.selenium.DIPageFactory;
+import org.openqa.selenium.WebDriver;
 
-	Page1 page;
+public class TestProject extends DIPageFactory {
 
-	public TestProject() {
-		page = new Page1();
+	public TestProject(WebDriver driver) {
+		super(driver);
 	}
 
 	public void loadUrl() {
-		page.loadurl();
+		getPage(Page1.class).loadurl();
 	}
 
 	public void goToAboutUsPage() {
-		page.goToAboutUsPage();
+		getPage(Page1.class).goToAboutUsPage();
 	}
 
 }

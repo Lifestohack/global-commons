@@ -1,11 +1,15 @@
 package test.commons.global.selenium;
 
-public class TestCases {
+import org.commons.selenium.DISetUp;
+import org.commons.selenium.DIWebDriver;
+
+public class TestCases extends DIWebDriver{
 
 	TestProject project;
 	
 	public TestCases() {
-		project = new TestProject();
+		DISetUp.setUpLogDirectory();
+		project = new TestProject(getDriver());
 		
 	}
 	
