@@ -102,5 +102,13 @@ public class DIWebDriver {
 	public WebDriver getDriver() {
 		return driver;
 	}
+	
+	public void closeBrowserOnFocous() {
+		driver.close();
+	}
+	
+	public void closeAllBrowser() {
+		driver.quit();
+	}
 
 }
