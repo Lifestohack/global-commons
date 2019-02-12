@@ -1,3 +1,5 @@
+This project has been taken private.
+
 # Global-Commons
 I am always involved in one way or another in projects where I had to do different kinds of software development. I am not full time software developer but again being involved in some development projects, I decided to write a Framework for myself that I can use again and again.
 
