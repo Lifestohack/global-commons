@@ -1,5 +1,5 @@
 # Global-Commons
-I am always involved in one way or another in projects where I had to do different kinds of software development.Each and every time I was involved in some projects there were similar things that I was doing. So I decided to make the framework for those similar things so that it is not redundant in each and every projects. 
+I am always involved in one way or another in projects where I had to do different kinds of software development. Each and every time I was involved in some projects there were similar things that I was doing. So I decided to make the framework for those similar things so that it is not redundant in each and every projects. 
 
 #Done
 
